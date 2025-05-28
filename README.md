@@ -57,7 +57,7 @@ MIT
 
 ## Author
 
-[Your Name]
+Ashraz Rashid
 
 ## Support
 
