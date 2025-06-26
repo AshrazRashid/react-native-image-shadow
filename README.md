@@ -98,37 +98,52 @@ To learn more about React Native, take a look at the following resources:
 
 # react-native-image-shadow
 
+[![npm version](https://img.shields.io/npm/v/react-native-image-shadow.svg)](https://www.npmjs.com/package/react-native-image-shadow)
+[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 A React Native library that generates beautiful shadows from images using color analysis and gradient effects.
+
+---
 
 ## Features
 
-- Automatically extracts dominant colors from images
-- Creates dynamic shadows based on image content
-- Smooth gradient transitions
-- Easy to integrate with existing React Native components
-- Lightweight and performant
+- 🎨 Automatically extracts dominant colors from images
+- 🌈 Creates dynamic shadows based on image content
+- 🌀 Smooth gradient transitions
+- 🧩 Easy to integrate with existing React Native components
+- ⚡ Lightweight and performant
+
+---
 
 ## Installation
 
 ```sh
-npm install react-native-image-shadow
+npm install react-native-image-shadow react-native-linear-gradient @somesoap/react-native-image-palette
 # or
-yarn add react-native-image-shadow
+yarn add react-native-image-shadow react-native-linear-gradient @somesoap/react-native-image-palette
 ```
+
+---
 
 ## Usage
 
 ```jsx
 import ImageCard from 'react-native-image-shadow';
 
-const MyComponent = () => (
-  <ImageCard
-    item={{ url: 'https://example.com/image.jpg' }}
-    style={{ width: 300, height: 200 }}
-    gradientAngleIndex={2} // Optional: select a gradient angle
-  />
-);
+export default function App() {
+  return (
+    <ImageCard
+      item={{
+        url: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb',
+      }}
+      style={{ width: 200, height: 200 }}
+      gradientAngleIndex={1} // Optional: select a gradient angle
+    />
+  );
+}
 ```
+
+---
 
 ## Props
 
@@ -147,19 +162,57 @@ import ImageCard from 'react-native-image-shadow';
 console.log(ImageCard.GRADIENT_ANGLES); // See available angles
 ```
 
-## Dependencies
+---
 
-- `@somesoap/react-native-image-palette`
-- `react-native-linear-gradient`
+## Example
+
+Below is a minimal example of how to use `react-native-image-shadow` in a React Native app:
+
+```jsx
+import React from 'react';
+import { SafeAreaView, StyleSheet } from 'react-native';
+import ImageCard from 'react-native-image-shadow';
+
+export default function App() {
+  return (
+    <SafeAreaView style={styles.container}>
+      <ImageCard
+        item={{
+          url: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb',
+        }}
+        style={{ width: 200, height: 200 }}
+        gradientAngleIndex={1}
+      />
+    </SafeAreaView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+  },
+});
+```
+
+---
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+---
 
 ## License
 
 MIT
 
+---
+
 ## Author
 
 Ashraz Rashid
-
----
 
 [GitHub Repo](https://github.com/AshrazRashid/react-native-image-shadow)

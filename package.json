@@ -1,6 +1,6 @@
 {
   "name": "react-native-image-shadow",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A React Native library that generates beautiful shadows from images using color analysis and gradient effects.",
   "main": "src/index.js",
   "files": [
