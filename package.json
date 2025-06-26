@@ -1,45 +1,42 @@
 {
   "name": "react-native-image-shadow",
-  "version": "0.0.1",
-  "private": true,
+  "version": "0.1.0",
+  "description": "A React Native library that generates beautiful shadows from images using color analysis and gradient effects.",
+  "main": "src/index.js",
+  "files": [
+    "src",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AshrazRashid/react-native-image-shadow.git"
+  },
+  "keywords": [
+    "react-native",
+    "image",
+    "shadow",
+    "gradient",
+    "palette",
+    "color",
+    "ui"
+  ],
+  "author": "Ashraz Rashid",
+  "license": "MIT",
   "scripts": {
-    "android": "react-native run-android",
-    "ios": "react-native run-ios",
-    "start": "react-native start",
-    "test": "jest",
-    "lint": "eslint ."
+    "test": "jest"
+  },
+  "peerDependencies": {
+    "react": ">=17.0.0",
+    "react-native": ">=0.64.0",
+    "react-native-linear-gradient": ">=2.5.6"
   },
   "dependencies": {
-    "@react-native/new-app-screen": "0.80.0",
-    "@somesoap/react-native-image-palette": "^1.2.1",
-    "react": "19.1.0",
-    "react-native": "0.80.0",
-    "react-native-image-palette": "^0.2.0",
-    "react-native-linear-gradient": "^2.8.3"
+    "@somesoap/react-native-image-palette": "^1.2.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.25.2",
-    "@babel/preset-env": "^7.25.3",
-    "@babel/runtime": "^7.25.0",
-    "@react-native-community/cli": "19.0.0",
-    "@react-native-community/cli-platform-android": "19.0.0",
-    "@react-native-community/cli-platform-ios": "19.0.0",
-    "@react-native/babel-preset": "0.80.0",
-    "@react-native/eslint-config": "0.80.0",
-    "@react-native/metro-config": "0.80.0",
-    "@react-native/typescript-config": "0.80.0",
-    "@types/jest": "^29.5.13",
-    "@types/react": "^19.1.0",
-    "@types/react-test-renderer": "^19.1.0",
-    "eslint": "^8.19.0",
-    "jest": "^29.6.3",
-    "metro-react-native-babel-preset": "^0.77.0",
-    "prettier": "2.8.8",
-    "react-test-renderer": "19.1.0",
-    "typescript": "5.0.4"
+    "jest": "^29.6.3"
   },
   "engines": {
     "node": ">=18"
-  },
-  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
+  }
 }

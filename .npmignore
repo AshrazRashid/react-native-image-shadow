@@ -1,0 +1,16 @@
+# Exclude test, config, and native files from npm package
+__tests__/
+android/
+ios/
+*.log
+*.zip
+*.md.bak
+babel.config.js
+metro.config.js
+Gemfile*
+jest.config.js
+tsconfig.json
+App.js
+app.json
+Archive.zip
+vendor/ 
