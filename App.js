@@ -1,6 +1,6 @@
 import React from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
-import ImageCard from '../src';
+import ImageCard from 'react-native-image-shadow';
 
 export default function App() {
   return (
