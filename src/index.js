@@ -1,11 +1,14 @@
 import React, { useEffect, useState, memo } from 'react';
-import { Image, View, ActivityIndicator, StyleSheet } from 'react-native';
+import { View, ActivityIndicator, StyleSheet } from 'react-native';
 import {
   getPalette,
   getAverageColor,
 } from '@somesoap/react-native-image-palette';
 import LinearGradient from 'react-native-linear-gradient';
 import PropTypes from 'prop-types';
+import FastImage from 'react-native-fast-image';
+
+const FALLBACK_IMAGE = require('./fallback.png'); // adjust path as needed
 
 const DEFAULT_COLOR = '#36D1C4'; // Modern teal blue
 const GRADIENT_ANGLES = [
@@ -45,12 +48,12 @@ function getAngleIndexFromUrl(url) {
 const ImageCard = memo(({ item, style, gradientAngleIndex }) => {
   const { url } = item;
   const [colors, setColors] = useState({
-    primary: DEFAULT_COLOR,
-    secondary: DEFAULT_COLOR,
-    background: DEFAULT_COLOR,
+    primary: '#FFF',
+    background: '#000',
   });
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showFallback, setShowFallback] = useState(false);
 
   // Determine gradient angle
   const angleIndex =
@@ -71,14 +74,12 @@ const ImageCard = memo(({ item, style, gradientAngleIndex }) => {
 
         let newColors = {
           primary: DEFAULT_COLOR,
-          secondary: DEFAULT_COLOR,
           background: DEFAULT_COLOR,
         };
         try {
           const palette = await getPalette(url, {
             fallbackColor: DEFAULT_COLOR,
           });
-          console.log('Palette for', url, palette);
           let primary =
             palette.vibrant || palette.dominantAndroid || DEFAULT_COLOR;
           let background =
@@ -133,34 +134,41 @@ const ImageCard = memo(({ item, style, gradientAngleIndex }) => {
     };
   }, [url]);
 
-  if (error) {
-    return (
-      <View style={[styles.container, style]}>
-        <Image
-          source={{ uri: url }}
-          style={styles.image}
-          resizeMode="contain"
-        />
-      </View>
-    );
-  }
+  // Always use safe color strings for LinearGradient
+  const safePrimary =
+    typeof colors.primary === 'string' && colors.primary[0] === '#'
+      ? colors.primary
+      : DEFAULT_COLOR;
+  const safeBackground =
+    typeof colors.background === 'string' && colors.background[0] === '#'
+      ? colors.background
+      : DEFAULT_COLOR;
 
   return (
     <LinearGradient
-      colors={[colors.primary, colors.background]}
+      colors={[safePrimary, safeBackground]}
       start={gradientAngle.start}
       end={gradientAngle.end}
       style={[styles.container, style]}
     >
       <View style={styles.overlay} />
-      {isLoading ? (
-        <ActivityIndicator color="#fff" />
-      ) : (
-        <Image
-          source={{ uri: url }}
-          style={styles.image}
-          resizeMode="contain"
-        />
+      <FastImage
+        source={
+          showFallback
+            ? FALLBACK_IMAGE
+            : typeof url === 'string'
+            ? { uri: url }
+            : url
+        }
+        onError={() => setShowFallback(true)}
+        style={styles.image}
+        resizeMode={FastImage.resizeMode.contain}
+      />
+
+      {isLoading && (
+        <View style={styles.loadingOverlay}>
+          <ActivityIndicator color="#fff" />
+        </View>
       )}
     </LinearGradient>
   );
@@ -168,19 +176,13 @@ const ImageCard = memo(({ item, style, gradientAngleIndex }) => {
 
 const styles = StyleSheet.create({
   container: {
-    margin: 15,
     height: 120,
     width: 120,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 20,
     overflow: 'hidden',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.18,
-    shadowRadius: 16,
-    elevation: 10,
-    backgroundColor: 'rgba(255,255,255,0.15)',
+    margin: 15,
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
@@ -191,10 +193,12 @@ const styles = StyleSheet.create({
     height: '60%',
     width: '60%',
     resizeMode: 'contain',
-    shadowColor: '#fff',
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.5,
-    shadowRadius: 10,
+  },
+  loadingOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'transparent',
   },
 });
 
