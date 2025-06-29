@@ -1,97 +1,249 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# react-native-image-shadow
 
-# Getting Started
+[![npm version](https://img.shields.io/npm/v/react-native-image-shadow.svg)](https://www.npmjs.com/package/react-native-image-shadow)
+[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![React Native](https://img.shields.io/badge/React%20Native-0.80.0+-blue.svg)](https://reactnative.dev)
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+<p align="center">
+  <img src="./Simulator Screen Recording - iPhone 16 Pro - 2025-06-29 at 16.50.40.gif" alt="react-native-image-shadow demo" width="300" />
+</p>
 
-## Step 1: Start Metro
+A React Native library that generates beautiful shadows from images using color analysis and gradient effects. Automatically extracts dominant colors from images and creates dynamic gradient backgrounds that complement the image content.
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+## ✨ Features
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+- 🎨 **Automatic Color Extraction** - Extracts dominant colors from images using advanced palette analysis
+- 🌈 **Dynamic Gradients** - Creates beautiful gradient backgrounds based on image content
+- 🌀 **Multiple Gradient Angles** - 6 different gradient directions for variety
+- 🧩 **Easy Integration** - Simple API that works with existing React Native components
+- ⚡ **Performance Optimized** - Lightweight and efficient with proper memoization
+- 🛡️ **Error Handling** - Graceful fallbacks for failed image loads or color extraction
+- 📱 **Cross Platform** - Works on both iOS and Android
 
-```sh
-# Using npm
-npm start
+## 📦 Installation
 
-# OR using Yarn
-yarn start
-```
+### Prerequisites
 
-## Step 2: Build and run your app
-
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
-
-### Android
-
-```sh
-# Using npm
-npm run android
-
-# OR using Yarn
-yarn android
-```
-
-### iOS
-
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
+Make sure you have the following dependencies installed in your React Native project:
 
 ```sh
-bundle install
+npm install react-native-linear-gradient @somesoap/react-native-image-palette
+# or
+yarn add react-native-linear-gradient @somesoap/react-native-image-palette
 ```
 
-Then, and every time you update your native dependencies, run:
+### Install the library
 
 ```sh
-bundle exec pod install
+npm install react-native-image-shadow
+# or
+yarn add react-native-image-shadow
 ```
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+### iOS Setup
+
+For iOS, you'll need to install CocoaPods dependencies:
 
 ```sh
-# Using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
+cd ios && pod install && cd ..
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+## 🚀 Quick Start
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+```jsx
+import React from 'react';
+import { SafeAreaView, StyleSheet } from 'react-native';
+import ImageCard from 'react-native-image-shadow';
 
-## Step 3: Modify your app
+export default function App() {
+  return (
+    <SafeAreaView style={styles.container}>
+      <ImageCard
+        item={{
+          url: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb',
+        }}
+        style={{ width: 200, height: 200 }}
+        gradientAngleIndex={1}
+      />
+    </SafeAreaView>
+  );
+}
 
-Now that you have successfully run the app, let's make changes!
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+  },
+});
+```
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+## 📖 API Reference
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+### Props
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+| Prop                 | Type   | Required | Default | Description                          |
+| -------------------- | ------ | -------- | ------- | ------------------------------------ |
+| `item`               | object | ✅       | -       | Object containing the image URL      |
+| `item.url`           | string | ✅       | -       | URL or require() path to the image   |
+| `style`              | object | ❌       | -       | Custom styles for the container      |
+| `gradientAngleIndex` | number | ❌       | auto    | Index to select gradient angle (0-5) |
 
-## Congratulations! :tada:
+### Gradient Angles
 
-You've successfully run and modified your React Native App. :partying_face:
+The library provides 6 different gradient angles that you can select using `gradientAngleIndex`:
 
-### Now what?
+- **0**: Diagonal from bottom-left to top-right
+- **1**: Diagonal from top-left to bottom-right
+- **2**: Diagonal from top-right to bottom-left
+- **3**: Vertical from top to bottom
+- **4**: Diagonal from bottom-right to top-left
+- **5**: Diagonal from top-right to bottom-left (alternative)
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
+If no `gradientAngleIndex` is provided, the library automatically selects an angle based on the image URL hash.
 
-# Troubleshooting
+## 💡 Usage Examples
 
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+### Basic Usage
 
-# Learn More
+```jsx
+import ImageCard from 'react-native-image-shadow';
 
-To learn more about React Native, take a look at the following resources:
+<ImageCard
+  item={{
+    url: 'https://example.com/image.jpg',
+  }}
+/>;
+```
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+### Custom Styling
+
+```jsx
+<ImageCard
+  item={{
+    url: 'https://example.com/image.jpg',
+  }}
+  style={{
+    width: 300,
+    height: 200,
+    borderRadius: 25,
+    margin: 20,
+  }}
+/>
+```
+
+### Specific Gradient Angle
+
+```jsx
+<ImageCard
+  item={{
+    url: 'https://example.com/image.jpg',
+  }}
+  gradientAngleIndex={2}
+  style={{ width: 150, height: 150 }}
+/>
+```
+
+### Multiple Cards with Different Angles
+
+```jsx
+import React from 'react';
+import { FlatList, View } from 'react-native';
+import ImageCard from 'react-native-image-shadow';
+
+const images = [
+  { id: '1', url: 'https://example.com/image1.jpg' },
+  { id: '2', url: 'https://example.com/image2.jpg' },
+  { id: '3', url: 'https://example.com/image3.jpg' },
+];
+
+export default function ImageGallery() {
+  const renderImageCard = ({ item, index }) => (
+    <ImageCard
+      item={item}
+      gradientAngleIndex={index % 6}
+      style={{ width: 120, height: 120, margin: 10 }}
+    />
+  );
+
+  return (
+    <FlatList
+      data={images}
+      renderItem={renderImageCard}
+      keyExtractor={item => item.id}
+      horizontal
+    />
+  );
+}
+```
+
+### Local Images
+
+```jsx
+<ImageCard
+  item={{
+    url: require('./assets/local-image.png'),
+  }}
+  style={{ width: 200, height: 200 }}
+/>
+```
+
+## 🎨 How It Works
+
+1. **Image Analysis**: The library uses `@somesoap/react-native-image-palette` to extract dominant colors from the image
+2. **Color Selection**: It intelligently selects primary and background colors from the palette
+3. **Gradient Creation**: Creates a beautiful gradient using the extracted colors
+4. **Fallback Handling**: If color extraction fails, it uses default colors and fallback images
+
+## 🔧 Customization
+
+### Default Colors
+
+The library uses a modern teal blue (`#36D1C4`) as the default color when color extraction fails.
+
+### Available Gradient Angles
+
+You can access the available gradient angles programmatically:
+
+```jsx
+import ImageCard from 'react-native-image-shadow';
+
+console.log(ImageCard.GRADIENT_ANGLES);
+// Returns array of gradient angle configurations
+```
+
+## 📱 Example App
+
+Check out the example app in the `example/LatestApp` directory to see the library in action:
+
+```sh
+cd example/LatestApp
+npm install
+# or
+yarn install
+
+# For iOS
+npx react-native run-ios
+
+# For Android
+npx react-native run-android
+```
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- [react-native-linear-gradient](https://github.com/react-native-linear-gradient/react-native-linear-gradient) for gradient support
+- [@somesoap/react-native-image-palette](https://github.com/somesoap/react-native-image-palette) for color extraction
+- [react-native-fast-image](https://github.com/DylanVann/react-native-fast-image) for optimized image loading
+
+---
+
+**Made with ❤️ by [Ashraz Rashid](https://github.com/AshrazRashid)**
